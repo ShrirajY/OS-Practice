@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>File Management System</h1>
+
+    <div>
+        <input id="fileName" type="text" placeholder="File Name">
+        <button onclick="createFile()">Create File</button>
+    </div>
+    <div>
+        <input id="writeFileName" type="text" placeholder="File Name">
+        <input id="writeText" type="text" placeholder="Text to Write">
+        <button onclick="writeToFile()">Write to File</button>
+    </div>
+    <div>
+        <input id="copyFileName" type="text" placeholder="Source File Name">
+        <input id="copyToFileName" type="text" placeholder="Target File Name">
+        <button onclick="copyFile()">Copy File</button>
+    </div>
+    <div>
+        <input id="linkFileName" type="text" placeholder="Source File Name">
+        <input id="linkToFileName" type="text" placeholder="Target File Name">
+        <button onclick="linkFile()">Link File</button>
+    </div>
+    <div>
+        <input id="renameFileName" type="text" placeholder="Old File Name">
+        <input id="renameToFileName" type="text" placeholder="New File Name">
+        <button onclick="renameFile()">Rename File</button>
+    </div>
+    <div>
+        <input id="deleteFileName" type="text" placeholder="File Name">
+        <button onclick="deleteFile()">Delete File</button>
+    </div>
+    <div>
+        <input id="moveFileFrom" type="text" placeholder="Old File Name">
+        <input id="moveFileTo" type="text" placeholder="New File Name">
+        <button onclick="moveFile()">Move File</button>
+    </div>
+
+    <table id="fileTable">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Show Buffers</th>
+                <th>Show Content</th>
+                <th>Show Inode</th>
+                <th>Copy To</th>
+                <th>Link To</th>
+                <th>Rename</th>
+                <th>Delete</th>
+                <th>Move To</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>

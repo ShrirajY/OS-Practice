@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIX-like File System Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>UNIX-like File System Simulation</h1>
+        </header>
+        <main>
+            <section class="command-section">
+                <textarea id="commandInput" placeholder="Type your UNIX commands here..."></textarea>
+                <button onclick="executeCommand()">Execute</button>
+            </section>
+            <section class="output-section">
+                <pre id="output"></pre>
+            </section>
+            <section class="filesystem-section">
+                <h2>File System</h2>
+                <div id="fileSystem"></div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
