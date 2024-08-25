@@ -1,0 +1,12 @@
+read - 4
+write - 2
+execute - 1
+
+read + write - 6
+write + execute - 3
+read + execute - 5
+
+read + write + execute 7
+
+user group others
+7   5       1

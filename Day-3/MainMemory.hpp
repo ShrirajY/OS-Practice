@@ -113,7 +113,6 @@ class BufferTable{
         {
             std::cout<<"Freelist created"<<std::endl;
             head=(Node *)malloc(sizeof(Node));
-            tail=(Node *)malloc(sizeof(Node));
             head->b=NULL;
             head->next=head;
             head->prev=head;

@@ -314,8 +314,6 @@ class BufVec{
             this->insert(other->head);
             this->LINKFLAG=false;
             this->NoBuffers=other->NoBuffers;
-
-
         }
 };
 #endif

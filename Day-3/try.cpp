@@ -6,6 +6,5 @@
 #include "BufferHeader.hpp"
 int main()
 {
-    BufferCache bc;
     
 }
