@@ -71,6 +71,11 @@ class Files{
             this->bufvec->clear();
             this->bufvec=other->bufvec;
         }
+
+        void writeToFile()
+        {
+            
+        }
 };
 
 #endif

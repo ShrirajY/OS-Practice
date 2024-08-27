@@ -5,7 +5,7 @@
 #include<cstring>
 #define FREE 0
 #define LOCKED 1
-#define MAXBUFSIZE 10
+#define MAXBUFSIZE 50
 
 struct Buffer{
     int BufHeader;
@@ -170,13 +170,18 @@ void WriteToBuffer(Buffer *b,char ch)
 BufferPool BPool;
 class BufVec{
     private:
-        Buffer *head;
+        
         Buffer *tail;
         int NoBuffers;
         Buffer *CurrBuff;
         bool LINKFLAG;
     public:
-        BufVec()
+        Buffer *head;
+        Buffer *CurrBuffWrite;
+        int BufTapeWrite;
+        char *FileNameBufVec;
+        std::fstream fileStream;
+        BufVec(char *_Name)
         {
             head=(Buffer *)malloc(sizeof(Buffer));
             head->BufHeader=-1;
@@ -186,6 +191,8 @@ class BufVec{
             NoBuffers=0;
             CurrBuff=head;
             LINKFLAG=false;
+            FileNameBufVec=(char *)malloc(sizeof(char)*200);
+            FileNameBufVec=_Name;
         }
 
         void insert(Buffer *a)
@@ -199,6 +206,8 @@ class BufVec{
                     head->VecPrev=head;
                     tail=head;
                     NoBuffers++;
+                    CurrBuffWrite=head;
+                    BufTapeWrite=0;
                     return;
                 }
                 tail->VecNext=a;
@@ -289,6 +298,8 @@ class BufVec{
             tail=head;
             NoBuffers=0;
             CurrBuff=head;
+            CurrBuffWrite=head;
+            BufTapeWrite=0;
         }
 
         int NoBuffersRet()
