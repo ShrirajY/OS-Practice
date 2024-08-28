@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <cstdio>
+#include <fcntl.h>
 #define FREE 0
 #define LOCKED 1
 #define MAXBUFSIZE 50
@@ -187,7 +189,7 @@ public:
     std::fstream fileStream;
     char *openFile;
     BufVec *other;
-    BufVec(char *_Name)
+    BufVec(char *_Name,char _FT, Files *Parent)
     {
         head = (Buffer *)malloc(sizeof(Buffer));
         head->BufHeader = -1;
@@ -197,17 +199,31 @@ public:
         NoBuffers = 0;
         CurrBuff = head;
         LINKFLAG = false;
-        FileNameBufVec = (char *)malloc(sizeof(char) * 200);
-        strcpy(FileNameBufVec,_Name);
-
-        char *FOLDER_PATH = strdup("E://Current Work//OS Practice//AllFiles//");
-        openFile = (char *)malloc(sizeof(char) * 200);
-        sprintf(openFile, "%s%s", FOLDER_PATH, FileNameBufVec);
-        fileStream.open(openFile, std::ios::out | std::ios::app);
-        if (!fileStream)
+        openFile=(char *)malloc(sizeof(char)*200);
+        strcpy(openFile,_Name);
+        std::cout<<openFile<<std::endl;
+        if(Parent->FileType=='f')
         {
-            std::cerr << "Failed to open file: " << FileNameBufVec << std::endl;
+            std::cout<<"Parent is not directory"<<std::endl;
+            return;
         }
+        if(_FT=='f')
+        {
+            std::cout<<"Creating File"<<std::endl;
+            fileStream.open(openFile, std::ios::out | std::ios::app);
+            if (!fileStream)
+            {
+                std::cerr << "Failed to open file: " << FileNameBufVec << std::endl;
+            }
+        }
+        else if(_FT=='d')
+        {
+            std::cout<<"Creating Folder"<<std::endl;
+            if (mkdir(openFile) == -1) {
+                perror("mkdir");
+            }
+        }
+        
     }
 
     void insert(Buffer *a)

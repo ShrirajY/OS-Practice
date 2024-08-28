@@ -6,45 +6,65 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-
+#include <cstdio>
+// #include <sys/stat.h>
+#include <fcntl.h>
 class Files
 {
 private:
     char *FileName;
     Inode *inode;
     BufVec *bufvec;
-    std::fstream fileStream; // File stream for appending content
+    // std::fstream fileStream; // File stream for appending content
     char *openFile;
-
+    char FileType;
+    int permission;
+    Files **Children;
+    Files *Parent;
+    int childrenNo;
 public:
-    Files(char *_Name)
+friend class BufVec;
+    Files(char *_Name, char _FT, Files *_parent)
     {
         FileName = (char *)malloc(sizeof(char) * 30);
         strcpy(FileName, _Name);
         inode = (Inode *)malloc(sizeof(Inode)); // Fixed typo here
         inode = IPool.AllocatInode();
-        bufvec = new BufVec(_Name);
-
+        
+        Parent=_parent;
         // Open file stream in append mode, create if it doesn't exist
         char *FOLDER_PATH = strdup("E://Current Work//OS Practice//AllFiles//");
         openFile = (char *)malloc(sizeof(char) * 200);
-        sprintf(openFile, "%s%s", FOLDER_PATH, FileName);
-        fileStream.open(openFile, std::ios::out | std::ios::app);
-        if (!fileStream)
+        
+        if(Parent==NULL)
         {
-            std::cerr << "Failed to open file: " << FileName << std::endl;
+            std::cout<<"Creating BufVec\n";
+            sprintf(openFile,"E://Current Work//OS Practice//AllFiles//%s",FileName);
+            std::cout<<openFile;
+            bufvec=new BufVec(openFile,_FT,false);
         }
+        else
+        {
+            sprintf(openFile,"%s//%s",Parent->openFile,this->FileName);
+            bufvec=new BufVec(openFile,_FT,Parent);
+            Parent->AddChildren(this);
+        }
+
+        this->FileType=_FT;
+        permission=777;
+        Children=(Files **)malloc(sizeof(Files *)*0);
+        childrenNo=0;
     }
 
     ~Files()
     {
-        if (fileStream.is_open())
-        {
-            fileStream.close();
-        }
-        free(FileName);
-        delete inode;
-        delete bufvec;
+        // if (fileStream.is_open())
+        // {
+        //     fileStream.close();
+        // }
+        // free(FileName);
+        // delete inode;
+        // delete bufvec;
     }
 
     void Info()
@@ -109,7 +129,7 @@ public:
         dest << src.rdbuf();
     }
 
-    void WriteToFile()
+    /*void WriteToFile()
     {
         if (fileStream.is_open())
         {
@@ -150,6 +170,13 @@ public:
         {
             std::cerr << "File stream is not open." << std::endl;
         }
+    }*/
+
+    void AddChildren(Files *child)
+    {
+        Children=(Files **)realloc(Children,sizeof(Files *)*(childrenNo+1));
+        Children[childrenNo]=child;
+        childrenNo+=1;
     }
 };
 
